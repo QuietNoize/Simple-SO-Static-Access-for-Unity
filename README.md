@@ -6,16 +6,12 @@ The main idea is simple:
 - you access those values through static properties in code.
 This is useful for global gameplay settings, balancing values, project-wide configuration, and other data that should be available from anywhere.
 
----
-
 # Basic workflow
 1. Create a class that inherits from `StaticDataSO`.
 2. Add serializable fields.
 3. Create an asset in Unity.
 4. Generate the wrapper.
 5. Use the generated static class in code.
-
----
 
 # Creating a StaticDataSO script
 You can create a new `StaticDataSO` script directly from the Unity Project window.
@@ -37,9 +33,7 @@ public class NewStaticDataSO : StaticDataSO
 ```
 This helps avoid setup mistakes and ensures the asset is compatible with the generation system.
 
----
-
-# `StaticDataSO`
+# StaticDataSO
 `StaticDataSO` is the base class used by the generation system.
 Every asset that should generate static code must inherit from it.
 Example:
@@ -57,16 +51,12 @@ public class GameBalanceSettingsSO : StaticDataSO
 ```
 The generator uses this base type to identify valid source assets.
 
----
-
 # Important requirement
 **If your asset does not inherit from `StaticDataSO`, the generation system will not work.**
 The generator only processes assets derived from `StaticDataSO`.
 That means:
 - no inheritance → no generation;
 - no generation → no static wrapper.
-
----
 
 # How generation works
 `StaticDataGenerator.SyncConstants(StaticDataSO so)` performs the generation process.
@@ -86,8 +76,6 @@ public static class GameBalanceSettingsWrapper
 }
 ```
 
----
-
 # Serializable fields
 The generator only includes fields that Unity can serialize.
 Included:
@@ -102,8 +90,6 @@ Example:
 public float moveSpeed;
 ```
 Both fields above will be included in generation.
-
----
 
 # Custom inspector
 If you need a custom inspector, there are two important rules.
@@ -126,23 +112,12 @@ protected override void DrawCustomInspectorGUI()
 ```
 This keeps the editor compatible with the generation pipeline.
 
----
-
 # Generation settings
 `StaticDataCodegenSettings` contains the settings used during generation.
-## `IsAutoSaved`
-Controls whether generated code is saved automatically.
-## `WrapperCodePath`
-Defines the output folder for generated code.
-If the value is empty, the generated file is placed next to the source asset.
-## `WrapperClassName`
-Defines the name of the generated static class.
-This field is required.
-If it is empty, generation stops with an error.
-## `WrapperCodeNamespace`
-Defines the namespace used in generated code.
-
----
+- **IsAutoSaved:** Controls whether generated code is saved automatically.
+- **WrapperCodePath:** Defines the output folder for generated code. If the value is empty, the generated file is placed next to the source asset.
+- **WrapperClassName:** Defines the name of the generated static class.
+- **WrapperCodeNamespace:** Defines the namespace used in generated code.
 
 # Supported types
 The generator supports:
@@ -162,8 +137,6 @@ Vector3
 ```
 Complex objects are serialized through `JsonUtility`.
 
----
-
 # Field name conversion
 Generated property names are created automatically.
 The system removes common prefixes:
@@ -177,10 +150,7 @@ _damage          -> damage
 s_maxLives       -> maxLives
 ```
 
----
-
 # Example usage
-
 ## Source asset
 ```csharp
 using QuietNoize.SimpleSOStaticAccess;
@@ -209,16 +179,11 @@ float speed = GameBalanceSettingsWrapper.baseMoveSpeed;
 int slots = GameBalanceSettingsWrapper.maxInventorySlots;
 ```
 
----
-
 # Notes
-
 - Generation only works inside the Unity Editor.
 - After generation, Unity refreshes the Asset Database automatically.
 - `List<T>` values are serialized through an internal wrapper.
 - Complex objects must still be Unity-serializable.
-
----
 
 # Quick checklist
 Before using the system:
@@ -229,12 +194,9 @@ Before using the system:
 - inherit custom editors from `StaticDataSOEditor`;
 - implement custom UI in `DrawCustomInspectorGUI`.
 
----
-
 # Summary
 `Simple SO Static Access` allows you to keep editable configuration data inside `ScriptableObject` assets while automatically generating static access code.
 The most important rules are:
 1. Source assets must inherit from `StaticDataSO`.
 2. Custom editors must inherit from `StaticDataSOEditor`.
 3. Custom inspector UI should be implemented in `DrawCustomInspectorGUI`.
-

@@ -1,4 +1,6 @@
 # Simple SO Static Access
+![](Simple SO Static Access/cover.png)
+
 `Simple SO Static Access` is a small utility that generates static C# code from `ScriptableObject` data.
 The main idea is simple:
 - you store configuration values inside a `ScriptableObject`;

@@ -99,9 +99,7 @@ If you need a custom inspector, there are two important rules.
 Your custom editor must inherit from `StaticDataSOEditor`.
 Example:
 ```csharp
-public class GameBalanceSettingsSOEditor : StaticDataSOEditor
-{
-}
+public class GameBalanceSettingsSOEditor : StaticDataSOEditor { }
 ```
 ### Rule 2
 Custom inspector drawing should be implemented in `DrawCustomInspectorGUI`.

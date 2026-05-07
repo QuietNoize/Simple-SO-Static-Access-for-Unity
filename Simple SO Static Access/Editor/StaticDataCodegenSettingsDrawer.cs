@@ -1,5 +1,6 @@
 namespace QuietNoize.SimpleSOStaticAccess.Editor
 {
+#if UNITY_EDITOR
     using UnityEditor;
     using UnityEngine;
 
@@ -157,4 +158,5 @@ namespace QuietNoize.SimpleSOStaticAccess.Editor
             return result;
         }
     }
+#endif
 }
